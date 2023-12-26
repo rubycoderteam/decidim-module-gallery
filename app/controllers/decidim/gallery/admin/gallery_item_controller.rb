@@ -24,7 +24,11 @@ module Decidim
             end
 
             on(:invalid) do
-              flash.now[:alert] = I18n.t("gallery_item.create.invalid", scope: "decidim.gallery.admin")
+              if @gallery_item.errors.present?
+                flash.now[:alert] = @gallery_item.errors.full_messages.join(', ')
+              else
+                flash.now[:alert] = I18n.t("gallery_item.create.invalid", scope: "decidim.gallery.admin")
+              end
               render action: "new"
             end
           end

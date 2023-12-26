@@ -18,6 +18,7 @@ module Decidim
             create_gallery_item!
           end
 
+          return broadcast(:invalid, @gallery_item) if @gallery_item.errors.present?
           broadcast(:ok, @gallery_item)
         end
 
@@ -26,7 +27,7 @@ module Decidim
         attr_reader :form
 
         def create_gallery_item!
-          @gallery_item = Decidim.traceability.create!(
+          @gallery_item = Decidim.traceability.create(
             GalleryItem,
             @current_user,
             attributes,
