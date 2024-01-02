@@ -18,6 +18,7 @@ module Decidim
             update_gallery_item!
           end
 
+          return broadcast(:invalid, @gallery_item) if @gallery_item.errors.present?
           broadcast(:ok, @gallery_item)
         end
 
@@ -26,7 +27,7 @@ module Decidim
         attr_reader :form
 
         def update_gallery_item!
-          @gallery_item.update!(**attributes)
+          @gallery_item.update(**attributes)
         end
 
         def attributes
